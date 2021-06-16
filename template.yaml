@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  RustLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Zip
+      Runtime: provided
+      CodeUri: ./lambda.zip
+      Handler: rust-aws-sam-lambda.bootstrap
+      Timeout: 10
+      MemorySize: 128
+      Events:
+        RustLambda:
+          Type: Api
+          Properties:
+            Path: /
+            Method: any
+
+Outputs:
+  RustLambdaApi:
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  RustLambdaFunction:
+    Value: !GetAtt RustLambdaFunction.Arn
+  RustLambdaFunctionIamRole:
+    Value: !GetAtt RustLambdaFunctionRole.Arn

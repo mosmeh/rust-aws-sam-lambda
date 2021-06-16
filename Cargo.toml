@@ -1,0 +1,20 @@
+[package]
+name = "rust-aws-sam-lambda"
+version = "0.1.0"
+authors = ["mosm <airman515@gmail.com>"]
+edition = "2018"
+
+[[bin]]
+name = "bootstrap"
+path = "src/bootstrap.rs"
+
+[dependencies]
+netlify_lambda_http = "0.2.0"
+serde = { version = "1.0.126", features = ["derive"], default-features = false }
+serde_json = { version = "1.0.64", default-features = false }
+tokio = "1.6.1"
+
+[profile.release]
+panic = 'abort'
+codegen-units = 1
+lto = true
